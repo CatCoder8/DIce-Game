@@ -2,7 +2,13 @@
 
 // Initialize
 let p1Score = document.querySelector('#score--0');
-let p2Score = document.querySelector('#score--1');   
+let p2Score = document.querySelector('#score--1');  
+
+let scoreLabel = document.querySelectorAll('.score');
+let currentScoreLabel = document.querySelectorAll('.current-score');
+
+const player = document.querySelector('.player');
+
 let dice = document.querySelector('.dice');
 const roll = document.querySelector('.btn--roll');
 const newGame = document.querySelector('.btn--new');
@@ -13,9 +19,14 @@ let score = 0;
 // Resetting Game
 const reset = function(){
     score = 0;
-    p1Score.textContent = score;
-    p2Score.textContent = score;
+
+    for(let i=0; i<scoreLabel.length; i++){
+        scoreLabel[i].textContent = score;
+        currentScoreLabel[i].textContent = score;
+    }
+
     dice.classList.add('hidden');
+    player.classList.add('player--active');
 }
 reset();
 
@@ -36,5 +47,7 @@ roll.addEventListener('click', function(){
         score += diceNum;
     }
 })
+
+
 
 
