@@ -22,30 +22,30 @@ let p1CurrentScore = 0;
 let p2CurrentScore = 0;
 
 const switchPlayer = function() {     
-    if (p0.classList.contains('.player--active')){
-        p0.classList.remove('.player--active')
-        p1.classList.add('.player--active');
+    if (p0.classList.contains('player--active')){
+        p0.classList.remove('player--active')
+        p1.classList.add('player--active');
     }
     else {
-        p1.classList.remove('.player--active')
-        p0.classList.add('.player--active');
+        p1.classList.remove('player--active')
+        p0.classList.add('player--active');
     }       
 }
 
 // FIX classList contains
 
 const currentPlayer = function(){
-    if(p0.classList.contains('.player--active'))
-        return 'p1';
-    else 
+    if(p0.classList.contains('player--active'))
         return 'p0';
+    else 
+        return 'p1';
 }
 
 const settingScore = function(diceNum, currentPlayer){
 
         if (currentPlayer === 'p0'){
             if (diceNum === 1){
-                p1CurrentScore === 0;
+                p1CurrentScore = 0;
                 p1CurrentScoreLabel.textContent = 0;
                 switchPlayer();
             }
@@ -58,7 +58,7 @@ const settingScore = function(diceNum, currentPlayer){
 
         if (currentPlayer === 'p1'){
             if (diceNum === 1){
-                p2CurrentScore === 0;
+                p2CurrentScore = 0;
                 p2CurrentScoreLabel.textContent = 0;
                 switchPlayer();
             }
