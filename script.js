@@ -1,8 +1,10 @@
 'use strict';
 
-// Initializex`
+// Initialize
 let scoreLabel = document.querySelectorAll('.score');
 let currentScoreLabel = document.querySelectorAll('.current-score');
+let p1ScoreLabel = document.querySelector('#score--0')
+let p2ScoreLabel = document.querySelector('#score--1')
 let p1CurrentScoreLabel = document.querySelector('#current--0');
 let p2CurrentScoreLabel = document.querySelector('#current--1');
 
@@ -32,8 +34,6 @@ const switchPlayer = function() {
     }       
 }
 
-// FIX classList contains
-
 const currentPlayer = function(){
     if(p0.classList.contains('player--active'))
         return 'p0';
@@ -41,30 +41,61 @@ const currentPlayer = function(){
         return 'p1';
 }
 
+const p1Reset = function(){
+    p1CurrentScore = 0;
+    p1CurrentScoreLabel.textContent = 0;
+    switchPlayer();
+}
+const p2Reset = function(){
+    p2CurrentScore = 0;
+    p2CurrentScoreLabel.textContent = 0;
+    switchPlayer();
+}
+
 const settingScore = function(diceNum, currentPlayer){
 
         if (currentPlayer === 'p0'){
-            if (diceNum === 1){
-                p1CurrentScore = 0;
-                p1CurrentScoreLabel.textContent = 0;
-                switchPlayer();
-            }
+            if (diceNum === 1)
+                p1Reset();
             else {
                 p1CurrentScore += diceNum;
                 p1CurrentScoreLabel.textContent = p1CurrentScore;
             }
         }
 
-
         if (currentPlayer === 'p1'){
-            if (diceNum === 1){
-                p2CurrentScore = 0;
-                p2CurrentScoreLabel.textContent = 0;
-                switchPlayer();
-            }
+            if (diceNum === 1)
+                p2Reset();
             else {
                 p2CurrentScore += diceNum;
                 p2CurrentScoreLabel.textContent = p2CurrentScore;
+            }
+        }
+}
+
+const holdingScore = function(currentPlayer){
+
+        if (currentPlayer === 'p0'){
+            if (p1Score < 100){
+                p1Score += p1CurrentScore;
+                p1ScoreLabel.textContent = p1Score;
+                p1Reset();
+            }
+            if (p1Score >= 100) {
+                p1ScoreLabel = p1Score;
+                p0.classList.add('player--winner');
+            }
+        }
+
+        if (currentPlayer === 'p1'){
+            if (p2Score < 100){
+                p2Score += p2CurrentScore;
+                p2ScoreLabel.textContent = p2Score;
+                p2Reset();
+            }
+            if (p2Score >= 100) {
+                p2ScoreLabel = p2Score;
+                p1.classList.add('player--winner');
             }
         }
 }
@@ -90,34 +121,16 @@ const reset = function(){
     dice.classList.add('hidden');
     p0.classList.add('player--active');
 }
-
 reset();
+
+// Buttons
 btnNew.addEventListener('click', reset)
 
-// Roll Dice
 btnRoll.addEventListener('click', function(){
-    
     generateDice();
     settingScore(diceNum, currentPlayer());
 })
 
-// Hold
-// hold.addEventListener('click', function hold(player){
-//     // Checking score
-//     if (p1CurrentScore >= 100){
-//         scoreLabel.textContent = scoreLabel;
-//         player.classList.add('player--winner');
-//     }
-//     else
-//         switchPlayer();
-    
-// })
-
-
-
-
-
-
-
-
-
+btnHold.addEventListener('click', function(){
+    holdingScore(currentPlayer());
+})
